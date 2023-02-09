@@ -9,6 +9,8 @@ const scene = new THREE.Scene()
 /**
  * Objects
  */
+
+//Group container of objects
 const group = new THREE.Group()
 scene.add(group)
 group.position.set(1, 2, 0)
@@ -19,7 +21,6 @@ const cube1 = new THREE.Mesh(
     new THREE.MeshBasicMaterial({color: "blue"})
 )
 group.add(cube1)
-
 
 
 const geometry = new THREE.BoxGeometry(1, 1, 1)
