@@ -1,0 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html, body{
+    overflow: hidden;
+    /* this one is to avoid the user scroll beyond the limit */
+}
