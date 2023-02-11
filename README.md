@@ -6,12 +6,12 @@ setup cameras, import 3d models etc ... with comments.
 # How to run those examples ?
 
 `bash`
-`# Install dependencies (only the first time)`
-npm install
+Install dependencies (only the first time)
+`npm install`
 
-`Run the local server at localhost:8080`
-npm run dev
+Run the local server at localhost:8080
+`npm run dev`
 
-`Build for production in the dist/ directory`
-npm run build
+Build for production in the dist/ directory
+`npm run build`
 
