@@ -35,6 +35,16 @@ window.addEventListener('resize', () =>{
     camera.updateProjectionMatrix()
     //update rendereer
     renderer.setSize(sizes.width, sizes.height)
+    // set the pixel ratio IMPORTANT TO EACH DEVICE
+    renderer.setPixesRatio(Math.min(window.devicePixelRatio),2)
+})
+//double click to fullscreen but ALT +F11 better
+window.addEventListener('dblclick',()=>{
+    if(!document.fullscreenElement){
+        canvas.requestFullscreen()
+    } else {
+        document.exitFullscreen()
+    }
 })
 
 
@@ -44,7 +54,7 @@ window.addEventListener('resize', () =>{
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 3
-scene.add(camera)
+
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
