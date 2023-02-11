@@ -6,6 +6,7 @@ setup cameras, import 3d models etc ... with comments.
 # How to run those examples ?
 
 `bash`
+
 Install dependencies (only the first time)
 `npm install`
 

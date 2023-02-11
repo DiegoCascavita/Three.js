@@ -2,6 +2,13 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import gsap from 'gsap'
 import * as dat from 'dat.gui'
+
+/**
+ * Debug iu dat.gui
+ */
+const gui = new dat.GUI()
+
+
 /**
  * Base
  */
@@ -17,8 +24,15 @@ const scene = new THREE.Scene()
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const mesh = new THREE.Mesh(geometry, material)
+mesh.visible = true
 scene.add(mesh)
 
+//DEBUG
+gui.add(mesh.position, 'x').min(-3).max(3).step(0.01)
+.name('red cube y')
+gui.add(mesh.position, 'y', -3, 3, 0.001)
+gui.add(mesh.position, 'z', -3, 3, 0.001)
+gui.add(mesh,'visible')
 /**
  * Sizes
  */
