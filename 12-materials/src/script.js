@@ -1,41 +1,46 @@
 import * as THREE from 'three'
+import { Color } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-
-
-//Textures
-const loadingManager = new THREE.LoadingManager()
-
-const textureLoader = new THREE.TextureLoader()
-const colorTexture = textureLoader.load('/textures/minecraft.png')
-const aphaTexture = textureLoader.load('/textures/door/alpha.jpg')
-const heighTexture = textureLoader.load('/textures/door/height.jpg')
-const normalTexture = textureLoader.load('/textures/door/normal.jpg')
-const ambientTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg')
-const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
-const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
-
-//fitlers far
-colorTexture.minFilter = THREE.NearestFilter
-// near
-colorTexture.magFilter = THREE.NearestFilter
 
 /**
  * Base
  */
+//Textures
+const textureLoader = new THREE.TextureLoader()
+const doorColorTexture = textureLoader.load('/textures/door/color.jpg')
+const alphaColorTexture = textureLoader.load('/textures/door/alpha.jpg')
+const heightColorTexture = textureLoader.load('/textures/door/height.jpg')
+const gradientTexture = textureLoader.load('/textures/gradients/3.jpg')
+
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
 
-/**
- * Object
- */
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-//instead of color
-const material = new THREE.MeshBasicMaterial({map: colorTexture})
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+//OBJECTS SPHERE
+const material = new THREE.MeshBasicMaterial()
+material.map = gradientTexture
+
+const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(0.5, 16, 16),
+    material
+)
+sphere.position.x = 1.1
+//PLANE
+const plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 1),
+    material
+)
+//TORUS OR DONUT
+const torus = new THREE.Mesh(
+    new THREE.TorusGeometry(0.3, 0.2, 16, 32),
+    material
+)
+torus.position.x = -1.1
+scene.add(sphere,plane, torus)
+
 
 /**
  * Sizes
@@ -67,7 +72,7 @@ window.addEventListener('resize', () =>
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 1
 camera.position.y = 1
-camera.position.z = 1
+camera.position.z = 2
 scene.add(camera)
 
 // Controls
@@ -92,6 +97,15 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
+    //update objects
+    sphere.rotation.y = 0.3 * elapsedTime
+    plane.rotation.y = 0.3 * elapsedTime
+    torus.rotation.y = 0.3 * elapsedTime
+
+    sphere.rotation.x = 0.3 * elapsedTime
+    plane.rotation.x = 0.3 * elapsedTime
+    torus.rotation.x = 0.3 * elapsedTime
+    
     // Update controls
     controls.update()
 
