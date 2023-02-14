@@ -66,6 +66,27 @@ mesh3.position.x = 2
 scene.add(mesh1, mesh2, mesh3)
 
 const sectionMeshes = [mesh1, mesh2, mesh3]
+
+/**
+ * Particles
+ */
+// Geometry
+const particlesCount = 200
+const positions = new Float32Array(particlesCount * 3)
+
+for(let i = 0; i < particlesCount; i++){
+    positions [i * 3 + 0] = Math.random() 
+    positions [i * 3 + 1] = Math.random() 
+    positions [i * 3 + 2] = Math.random() 
+}
+
+const particlesGeometry = new THREE.BufferGeometry()
+particlesGeometry.setAttribute('position',
+ new THREE.BufferAttribute(particlesGeometry,3))
+
+// Material
+
+
 /**
  * lights
  */
@@ -100,10 +121,16 @@ window.addEventListener('resize', () =>
 /**
  * Camera
  */
+
+// Camera Group
+const cameraGroup = new THREE.Group()
+scene.add(cameraGroup)
+
+
 // Base camera
 const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 6
-scene.add(camera)
+cameraGroup.add(camera)
 
 /**
  * Renderer
@@ -140,10 +167,13 @@ window.addEventListener("mousemove", (event)=>{
  * Animate
  */
 const clock = new THREE.Clock()
+let previousTime = 0
 
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+    const deltaTime = elapsedTime - previousTime
+    previousTime = elapsedTime
 
     //CAMERA 
     //IMPORTANT ! - - - - - - - - - - - - - - - - - - - -
@@ -151,15 +181,15 @@ const tick = () =>
     //- - - - - - - - - - - - - - -- - - - - - - - -- - - - -
 
     //PARALLAX animation
-    const parallaxX = cursor.x
-    const parallaxY = - cursor.y
-    camera.position.x = parallaxX
-    camera.position.y = parallaxY
-
-    //Animate meshes
+    const parallaxX = cursor.x * 0.5
+    const parallaxY = - cursor.y * 0.5
+    cameraGroup.position.x += (parallaxX - cameraGroup.position.x) *5 * deltaTime
+    cameraGroup.position.y += (parallaxY - cameraGroup.position.y)
+    *5 * deltaTime
+   //Animate meshes
     for(const mesh of sectionMeshes){
         mesh.rotation.x = elapsedTime * 0.1
-        mesh.rotation.y = elapsedTime * 0.12
+        mesh.rotation.y = elapsedTime * 0.1
     }
 
     // Render
