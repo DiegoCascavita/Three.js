@@ -59,6 +59,10 @@ mesh1.position.y = - objectsDistance * 0
 mesh2.position.y = - objectsDistance * 1
 mesh3.position.y = - objectsDistance * 2
 
+mesh1.position.x = 2 
+mesh2.position.x = -2 
+mesh3.position.x = 2 
+
 scene.add(mesh1, mesh2, mesh3)
 
 const sectionMeshes = [mesh1, mesh2, mesh3]
@@ -117,8 +121,21 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 let scrollY = window.scrollY
 window.addEventListener("scroll", ()=>{
     scrollY = window.scrollY
-    console.log(scrollY)
 })
+
+/**
+ * Cursor
+ */
+const cursor = {}
+cursor.x = 0
+cursor.y = 0
+
+window.addEventListener("mousemove", (event)=>{
+    cursor.x = event.clientX / sizes.width - 0.5
+    cursor.y = event.clientY / sizes.height - 0.5
+
+})
+
 /**
  * Animate
  */
@@ -127,6 +144,17 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    //CAMERA 
+    //IMPORTANT ! - - - - - - - - - - - - - - - - - - - -
+    camera.position.y = - scrollY / sizes.height * objectsDistance 
+    //- - - - - - - - - - - - - - -- - - - - - - - -- - - - -
+
+    //PARALLAX animation
+    const parallaxX = cursor.x
+    const parallaxY = - cursor.y
+    camera.position.x = parallaxX
+    camera.position.y = parallaxY
 
     //Animate meshes
     for(const mesh of sectionMeshes){
