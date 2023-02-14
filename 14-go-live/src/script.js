@@ -32,11 +32,11 @@ fontLoader.load(
     (font) =>
     {
         // Material
-        const material = new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
+        const material = new THREE.MeshNormalMaterial({ matcap: matcapTexture })
 
         // Text
         const textGeometry = new TextGeometry(
-            'Hello Three.js',
+            'Dev. Diego C',
             {
                 font: font,
                 size: 0.5,
