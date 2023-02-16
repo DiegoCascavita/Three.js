@@ -14,6 +14,7 @@ gui
     .addColor(parameters, 'materialColor')
     .onChange(()=>{
         material.color.set(parameters.materialColor)
+        particlesMaterial.color.set(parameters.materialColor)
     })
 
 /**
@@ -36,7 +37,8 @@ gradientTexture.magFilter = THREE.NearestFilter
  */
 const material = new THREE.MeshToonMaterial({
     color: parameters.materialColor,
-    gradientMap: gradientTexture
+    gradientMap: gradientTexture,
+    wireframe: true
 })
 
 //MESHES
@@ -75,17 +77,25 @@ const particlesCount = 200
 const positions = new Float32Array(particlesCount * 3)
 
 for(let i = 0; i < particlesCount; i++){
-    positions [i * 3 + 0] = Math.random() 
-    positions [i * 3 + 1] = Math.random() 
-    positions [i * 3 + 2] = Math.random() 
+    positions [i * 3 + 0] = (Math.random() - 0.5) * 10 //x
+    positions [i * 3 + 1] = objectsDistance * 0.4 -   //z
+    Math.random()  * objectsDistance * sectionMeshes.length
+    positions [i * 3 + 2] = (Math.random() - 0.5) *10 //y
 }
 
 const particlesGeometry = new THREE.BufferGeometry()
 particlesGeometry.setAttribute('position',
- new THREE.BufferAttribute(particlesGeometry,3))
+ new THREE.BufferAttribute(positions,3))
 
 // Material
-
+const particlesMaterial = new THREE.PointsMaterial({
+    color: parameters.materialColor,
+    sizeAttenuation : true,
+    size: 0.03
+})
+//Points
+const particles = new THREE.Points (particlesGeometry, particlesMaterial)
+scene.add(particles)
 
 /**
  * lights
