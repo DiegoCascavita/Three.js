@@ -9,7 +9,8 @@ Welcome to my notes learning Three.js, isn't a full program, only notes about ho
 Install dependencies (only the first time)
 `npm install`
 
-Run the local server at localhost:8080
+Run the local server at localhost:
+http://localhost:5173/
 `npm run dev`
 
 Build for production in the dist/ directory
