@@ -3,7 +3,15 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer'
 import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass'
+import {DotScreenPass} from 'three/examples/jsm/postprocessing/DotScreenPass'
+import {GlitchPass} from 'three/examples/jsm/postprocessing/GlitchPass'
+import {ShaderPass} from 'three/examples/jsm/postprocessing/ShaderPass'
+import {RGBShiftShader} from 'three/examples/jsm/shaders/RGBShiftShader'
+import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass'
+
 import * as dat from 'lil-gui'
+import { RGBAFormat } from 'three'
+import { flattenJSON } from 'three/src/animation/AnimationUtils'
 
 
 /**
@@ -138,12 +146,46 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Post processing
  **/
-const effectComposer = new EffectComposer(renderer)
+
+//Render target
+const renderTarget = new THREE.WebGLRenderTarget(
+    800,
+    600,
+    {
+        minFilter: THREE.LinearFilter,
+        magFilter: THREE.LinearFilter,
+        format: THREE.RGBAFormat,
+        encoding: THREE.sRGBEncoding 
+    }
+)
+
+//Composer
+const effectComposer = new EffectComposer(renderer, renderTarget)
 effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 effectComposer.setSize(sizes.width, sizes.height)
 
+//Passes
 const renderPass = new RenderPass(scene, camera)
 effectComposer.addPass(renderPass)
+
+// const dotScreenPass = new DotScreenPass()
+// dotScreenPass.enabled = false
+// effectComposer.addPass(dotScreenPass)
+
+// const glitchPass = new GlitchPass()
+// glitchPass.enabled = false
+// effectComposer.addPass(glitchPass)
+
+// const rgbShiftPass = new ShaderPass(RGBShiftShader)
+// rgbShiftPass.enabled = false
+// effectComposer.addPass(rgbShiftPass)
+
+// const unrealBloomPass = new UnrealBloomPass()
+// UnrealBloomPass.enabled = false
+// UnrealBloomPass.strength = 0.3
+// UnrealBloomPass.radius = 1
+// UnrealBloomPass.threshold = 0.6
+// effectComposer.addPass(unrealBloomPass)
 
 
 /**
