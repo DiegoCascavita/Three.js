@@ -21,6 +21,19 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
+ * Overlay loading
+ */
+const overlayGeometry = new THREE.PlaneBufferGeometry(1,1,1,1)
+const overlayMaterial = new THREE.ShaderMaterial({ color: 'black',
+    vertexShader: `
+    void
+    `
+})
+const overlay = new THREE.Mesh(overlayGeometry, overlayMaterial)
+scene.add(overlay)
+
+
+/**
  * Update all materials
  */
 const updateAllMaterials = () =>
