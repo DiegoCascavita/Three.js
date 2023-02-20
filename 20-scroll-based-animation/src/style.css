@@ -15,7 +15,10 @@ html{
     left: 0;
     outline: none;
 }
-
+.left-Text{
+    text-align: right;
+    width: 50%;
+}
 
 .section
 {
